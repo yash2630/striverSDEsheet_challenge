@@ -1,0 +1,43 @@
+#include <bits/stdc++.h> 
+long long int merge(long long int *arr,long long int left,long long int mid, long long int right){
+    long long int lsize=mid-left+1;
+    long long int rsize=right-mid;
+    long long int larr[lsize],rarr[rsize];
+    for(long long int i=0;i<lsize;i++){
+        larr[i]=arr[left+i];
+    }
+    for(long long int i=0;i<rsize;i++){
+        rarr[i]=arr[mid+1+i];
+    }
+    long long int inversion=0,i=0,j=0,k=left;
+    while(i<lsize && j<rsize){
+        if(larr[i]<=rarr[j]){
+            arr[k++]=larr[i++];
+        }
+        else{
+            arr[k++]=rarr[j++];
+            inversion+=(lsize-i);
+        }
+    }
+    while(i<lsize){
+        arr[k++]=larr[i++];
+    }
+    while(j<rsize){
+        arr[k++]=rarr[j++];
+    }
+    return inversion;
+}
+long long int count(long long int *arr,long long int left,long long int right){
+    long long int inversion=0;
+    if(left<right){
+        long long int mid=(left+right)/2;
+        inversion+=count(arr,left,mid);
+        inversion+=count(arr,mid+1,right);
+        inversion+=merge(arr,left,mid,right);
+    }
+    return inversion;
+}
+
+long long getInversions(long long *arr, int n){
+    return count(arr,0,n-1);
+}
