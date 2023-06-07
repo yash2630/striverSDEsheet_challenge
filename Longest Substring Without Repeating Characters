@@ -1,0 +1,18 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string s)
+{
+    set<char>st;
+    int maxi=0;
+    int l = 0;
+    for(int r = 0;r<s.size();r++){
+        if(st.find(s[r])!=st.end()){
+            while(l<r && st.find(s[r])!=st.end()){
+                st.erase(s[l]);
+                l++;
+            }
+        }
+        st.insert(s[r]);
+        maxi=max(maxi,r-l+1);
+    }
+    return maxi;
+}
