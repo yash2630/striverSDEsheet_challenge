@@ -1,0 +1,21 @@
+#include <bits/stdc++.h> 
+void helper(stack<int>&st,int data){
+	if(st.empty() || st.top()<data){
+		st.push(data);
+		return;
+	}
+	int val = st.top();
+	st.pop();
+	helper(st,data);
+	st.push(val);
+	return;
+}
+void sortStack(stack<int> &st){
+	if(st.empty())return;
+	int data = st.top();
+	st.pop();
+	sortStack(st);
+	if(st.empty())st.push(data);
+	else helper(st,data);
+	return;
+}
