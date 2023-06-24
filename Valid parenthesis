@@ -1,0 +1,22 @@
+bool isValidParenthesis(string txt){
+    int i,j=-1;
+    int len = txt.length();
+    if(len==1) return false;
+    int* txt1 = new int[len];
+    for(i=0 ; i<len ; i++){
+        if (txt[i] == '{' || txt[i] == '[' || txt[i] == '(') {
+            j++;
+            txt1[j] = txt[i];
+        }
+        else {
+            if ((j==-1 || txt1[j] == '{' && txt[i] != '}') || (txt1[j] == '[' && txt[i] != ']') || (txt1[j] == '(' && txt[i] != ')')) {
+                return false;
+                delete txt1;
+            }
+            j--;
+        }
+    }
+    delete txt1;
+    if(j==-1) return true;
+    else false;
+}
