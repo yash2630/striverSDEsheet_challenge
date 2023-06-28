@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+void mapHorizontalDistance(TreeNode<int> *root, map<int, map<int, vector<int>>> &hash, int dist, int level){
+    if(root == NULL) return;
+    hash[dist][level].push_back(root->data);
+    level++;
+    if(root->left != NULL)
+        mapHorizontalDistance(root->left, hash, dist - 1, level);
+    if(root->right != NULL)
+        mapHorizontalDistance(root->right, hash, dist + 1, level);
+}
+
+vector<int> verticalOrderTraversal(TreeNode<int> *root){
+    map<int, map<int, vector<int>>> hash;
+    mapHorizontalDistance(root, hash, 0, 0);
+    vector<int> ans;
+    for(auto it : hash){
+        for(auto iit : it.second){
+            for(auto j : iit.second){
+                ans.push_back(j);
+            }
+        }
+    }
+    return ans;
+}
